@@ -9,8 +9,10 @@ metadata:
   namespace: "{{ .Values.NAMESPACE }}"
 spec:
   ipFamilyPolicy: PreferDualStack
-  type: LoadBalancer
+  type: {{ .Values.APACHE_SERVICE_TYPE }}
+  {{- if eq .Values.APACHE_SERVICE_TYPE "LoadBalancer" }}
   externalTrafficPolicy: Local
+  {{- end }}
   ports:
     - name: "{{ .Values.APACHE_PORT }}"
       port: {{ .Values.APACHE_PORT }}

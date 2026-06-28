@@ -11,7 +11,10 @@ metadata:
   namespace: "{{ .Values.NAMESPACE }}"
 spec:
   ipFamilyPolicy: PreferDualStack
-  type: LoadBalancer
+  type: {{ .Values.TALK_SERVICE_TYPE }}
+  {{- if eq .Values.TALK_SERVICE_TYPE "LoadBalancer" }}
+  externalTrafficPolicy: Local
+  {{- end }}
   ports:
     - name: "{{ .Values.TALK_PORT }}"
       port: {{ .Values.TALK_PORT }}
